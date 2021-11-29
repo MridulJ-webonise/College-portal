@@ -1,0 +1,36 @@
+CREATE TABLE Students(
+    Student_ID int NOT NULL AUTO_INCREMENT,
+    Name varchar(255) NOT NULL,
+    Phone_Number varchar(10) NOT NULL check( LENGTH(Phone_Number)=10 ),
+    Email varchar(255) NOT NULL check( Email like '_%@__%.__%' ),
+    PRIMARY KEY(Student_ID)
+);
+
+INSERT INTO Students(Name,Phone_Number,Email) VALUES('Mridul','8588990535','mridul@gmail.com');
+
+CREATE TABLE Departments(
+    Dept_ID int NOT NULL,
+    Name varchar(255) NOT NULL,
+    HOD varchar(255) NOT NULL,
+    PRIMARY KEY(Dept_ID)
+);
+
+INSERT INTO Departments VALUES(101,'CSE','Rohit');
+INSERT INTO Departments VALUES(102,'IT','Aman');
+
+CREATE TABLE Student_Dept(
+    Dept_ID int NOT NULL,
+    Student_ID int NOT NULL,
+    PRIMARY KEY(Dept_ID, Student_ID),
+    FOREIGN KEY(Dept_ID) REFERENCES Departments(Dept_ID),
+    FOREIGN KEY(Student_ID) REFERENCES Students(Student_ID)
+);
+
+
+CREATE TABLE Users(
+    Name varchar(255) NOT NULL,
+    Email varchar(255) NOT NULL ,
+    Password varchar(255) NOT NULL,
+    UserType varchar(255) NOT NULL,
+    PRIMARY KEY(Email)
+);
