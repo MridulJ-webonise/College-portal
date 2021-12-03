@@ -1,21 +1,12 @@
 var express = require("express");
 var router = express.Router();
-const query = require("../services/db");
+const auth = require("../middleware/auth")
+const DeptController = require("../controllers/DeptController")
 
-router.get("/", async function(req, res){
-	let DepartmentObj = await query(`SELECT * FROM Departments;`);
-	// let DepartmentName = DepartmentObj
-	res.send(DepartmentObj);
-})
+router.get("/", auth, DeptController.getAllDepts)
 
-router.post("/addDepartment", async function(req, res){
-	let {Dept_ID, Name, HOD} = req.body;
+router.post("/addDepartment", auth, DeptController.addDept)
 
-	await query( `INSERT INTO Departments VALUES('${Dept_ID}','${Name}','${HOD}');` );
-	res.send({
-		message : 'Department added',
-		newDepartment : req.body
-	})
-})
+router.put("/editDepartment/:id", auth, DeptController.editDept)
 
 module.exports = router;

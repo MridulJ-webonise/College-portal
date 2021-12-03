@@ -24,7 +24,7 @@ function CheckBoxInput({label, data, value, handleChange}) {
                 data.map( (dept) =>{
                     return (
                         <>
-                            <input onChange={()=>{handleInputChange(dept.Name, dept.DeptID)}} type="checkbox" id={`id${dept.DeptID}`} value={`${dept.Name}`}/>
+                            <input onChange={()=>{handleInputChange(dept.Name, dept.Dept_ID)}} type="checkbox" id={`id${dept.Dept_ID}`} value={`${dept.Name}`}/>
                             <label> {dept.Name}</label>
                         </>
                     )

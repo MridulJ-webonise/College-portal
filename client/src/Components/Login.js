@@ -3,6 +3,7 @@ import { useHistory } from "react-router";
 import axios from 'axios';
 import Input from "./Input";
 import './Login.css'
+import verifyAccess from "../auth/auth";
 function Login(){
 
     const[email, setEmail] = useState('');
@@ -33,6 +34,16 @@ function Login(){
         setPassword(value);  
     }
 
+    useEffect( ()=>{
+      const accessState = verifyAccess();
+
+      if( accessState.access != 'no-access' )
+      {
+        history.push('/users');
+      }
+
+    },[] )
+
     useEffect(() => {
         setDisabled( !(email && password) );
     }, [email, password])
@@ -40,25 +51,27 @@ function Login(){
     const handleSubmit = async ()=>{
 
         try{
-            const response = await axios.post('http://localhost:5000/login',{
+            const response = await axios.post('http://localhost:4000/login',{
                 email,
                 password
             })
-            console.log(response);
 
-            // if( response.msg )
-            // {
-            //     setResponseError(response.msg);
-            // }
-            // else
-            //     history.push('/users')
+            if( response.data.msg )
+            {
+                setResponseError(response.data.msg);
+            }
+            else{
+                console.log(response);
+                localStorage.setItem('token', response.data.token)
+                // localStorage.setItem('userType', response?.data?.user.userType)
+                history.push('/users')
+            }
                 
         }
         catch(e){
+            setResponseError(e.message);
             console.log(e);
         }
-
-        // if( res )
 
     }
 

@@ -34,3 +34,9 @@ CREATE TABLE Users(
     UserType varchar(255) NOT NULL,
     PRIMARY KEY(Email)
 );
+
+
+SELECT S.Name, S.Phone_Number from 
+Students as S INNER JOIN Student_Dept as SD 
+on S.Student_ID = SD.Student_ID where SD.Dept_ID = 102;
+
